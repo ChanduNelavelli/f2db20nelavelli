@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to Northwest Missouri State University
+  body 
+  button(type="button", class="btn btn-secondary" onclick ="doBump()") press me
+  div#bump Bump the count
+  a(href="pizza") Search Results
+
+
+  script.
+   var count = 0
+   var bump = 1
+   function doBump(){
+      count = count + bump 
+      bump = bump + 1
+      document.getElementById("bump").innerHTML = "Count "+ count +" Bump "+bump;
+   }
+   
