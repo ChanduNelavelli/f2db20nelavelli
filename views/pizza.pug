@@ -1,7 +1,8 @@
 extends layout
 block content
   h1= title
-  - let results=[{size:"small", crust:"cheesy", count:5},{size:"medium", crust:"deep pan", count:2},{size:"large", crust:"thin", count:4}]
+  //- let results=[{size:"small", crust:"cheesy", count:5},{size:"medium", crust:"deep pan", count:2},{size:"large", crust:"thin", count:4}]
+  let items = results 
   div(class="container-fluid")
   div(class="row")
   each value,index in results

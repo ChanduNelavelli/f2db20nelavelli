@@ -4,11 +4,31 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+require('dotenv').config(); 
+const connectionString =  
+process.env.MONGO_CON 
+mongoose = require('mongoose'); 
+mongoose.connect(connectionString,  
+{useNewUrlParser: true, 
+useUnifiedTopology: true});
+
+//Get the default connection 
+var db = mongoose.connection; 
+ 
+//Bind connection to error event  
+db.on('error', console.error.bind(console, 'MongoDB connection error:')); 
+db.once("open", function(){ 
+  console.log("Connection to DB succeeded")}); 
+
+
+var resourceRouter = require('./routes/resource');
+var Pizza = require("./models/pizza");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var pizzaRouter = require('./routes/pizza');
 var gridbuildRouter = require('./routes/gridbuild');
 var selectorRouter = require('./routes/selector');
+
 
 var app = express();
 
@@ -27,6 +47,8 @@ app.use('/users', usersRouter);
 app.use('/pizza', pizzaRouter);
 app.use('/gridbuild', gridbuildRouter);
 app.use('/selector', selectorRouter);
+app.use('/resource', resourceRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -45,3 +67,30 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+// We can seed the collection if needed on server start 
+async function recreateDB(){ 
+  // Delete everything 
+  await Pizza.deleteMany(); 
+ 
+  let instance1 = new Pizza({size:"small", crust:"cheesy", count:5}); 
+  instance1.save( function(err,doc) { 
+      if(err) return console.error(err); 
+      console.log("First object saved") 
+  });
+  
+  let instance2 = new Pizza({size:"medium", crust:"deep pan", count:2}); 
+  instance2.save( function(err,doc) { 
+      if(err) return console.error(err); 
+      console.log("Second object saved") 
+  }); 
+
+  let instance3 = new Pizza({size:"large", crust:"thin", count:4}); 
+  instance3.save( function(err,doc) { 
+      if(err) return console.error(err); 
+      console.log("Third object saved")
+  }); 
+} 
+ 
+let reseed = true; 
+if (reseed) { recreateDB();}
