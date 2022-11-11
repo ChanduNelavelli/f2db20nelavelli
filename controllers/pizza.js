@@ -6,8 +6,15 @@ exports.pizza_list = function(req, res) {
 }; 
  
 // for a specific Costume. 
-exports.pizza_detail = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Pizza detail: ' + req.params.id); 
+exports.pizza_detail = async function(req, res) { 
+    console.log("detail"  + req.params.id) 
+    try { 
+        result = await Pizza.findById( req.params.id) 
+        res.send(result) 
+    } catch (error) { 
+        res.status(500) 
+        res.send(`{"error": document for id ${req.params.id} not found`); 
+    } 
 }; 
  
 // Handle Costume create on POST. 
@@ -69,4 +76,25 @@ exports.pizza_create_post = async function(req, res) {
         res.status(500); 
         res.send(`{"error": ${err}}`); 
     }   
+}; 
+
+// Handle Costume update form on PUT. 
+exports.pizza_update_put = async function(req, res) { 
+    console.log(`update on id ${req.params.id} with body 
+${JSON.stringify(req.body)}`) 
+    try { 
+        let toUpdate = await Pizza.findById( req.params.id) 
+        // Do updates of properties 
+        if(req.body.size)  
+               toUpdate.size = req.body.size; 
+        if(req.body.crust) toUpdate.crust = req.body.crust; 
+        if(req.body.count) toUpdate.count = req.body.count; 
+        let result = await toUpdate.save(); 
+        console.log("Sucess " + result) 
+        res.send(result) 
+    } catch (err) { 
+        res.status(500) 
+        res.send(`{"error": ${err}: Update for id ${req.params.id} 
+failed`); 
+    } 
 }; 
