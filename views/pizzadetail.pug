@@ -2,21 +2,23 @@ extends layout
  
 block content 
   h1= title 
- 
-  - let pizzaid = toShow._id 
-  - let size = toShow.size 
-  - let crust = toShow.crust 
-  - let count = toShow.count 
-  div 
-    div.row 
-      div(class='pizzaSty mr-3') Pizza ID is: 
-      div #{pizzaid} 
-    div.row 
-      div(class='pizzaSty mr-3') Pizza Size is: 
-      div #{size} 
-    div.row 
-      div(class='pizzaSty mr-3') Pizza Crust is: 
-      div #{crust} 
-    div.row 
-      div(class='pizzaSty mr-3') Pizza Count is: 
-      div #{count}
+  if(toShow==null)
+    h2 No instance to Detail
+  else 
+   - let pizzaid = toShow._id 
+   - let size = toShow.size 
+   - let crust = toShow.crust 
+   - let count = toShow.count 
+   div 
+     div.row 
+       div(class='pizzaSty mr-3') Pizza ID is: 
+       div #{pizzaid} 
+     div.row 
+       div(class='pizzaSty mr-3') Pizza Size is: 
+       div #{size} 
+     div.row 
+       div(class='pizzaSty mr-3') Pizza Crust is: 
+       div #{crust} 
+     div.row 
+       div(class='pizzaSty mr-3') Pizza Count is: 
+       div #{count}

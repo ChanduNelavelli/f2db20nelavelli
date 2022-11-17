@@ -2,42 +2,44 @@ extends layout
  
 block content 
   h1= title 
- 
-  - let pizzaid = toShow._id 
-  - let size = toShow.size 
-  - let crust = toShow.crust 
-  - let count = toShow.count
+  if(toShow==null)
+    h2 No instance to Update 
+  else
+   - let pizzaid = toShow._id 
+   - let size = toShow.size 
+   - let crust = toShow.crust 
+   - let count = toShow.count
    
-  div.row(class='mb-2') 
-    div.mr-1 ID is 
-    div #{pizzaid} 
-  - let actionid = "/resource/pizzas/" + pizzaid 
-  form(id='PizzaForm', action= actionid, method="PUT") 
-    div.form-group 
-        label.pizzaAttr(for='size') Pizza size 
-        input#pizza_type(type='text', name='size', value= size ) 
-    div.form-group 
-        label.pizzaAttr(for='crust') Pizza crust 
-        input#size(type='text', name='crust', value= crust ) 
-    div.form-group 
-        label.pizzaAttr(for='count') Pizza count 
-        input#cost(type='number', name='count', value= count ) 
-    input(type="submit") 
+   div.row(class='mb-2') 
+     div.mr-1 ID is 
+     div #{pizzaid} 
+   - let actionid = "/resource/pizzas/" + pizzaid 
+   form(id='PizzaForm', action= actionid, method="PUT") 
+     div.form-group 
+         label.pizzaAttr(for='size') Pizza size 
+         input#pizza_type(type='text', name='size', value= size ) 
+     div.form-group 
+         label.pizzaAttr(for='crust') Pizza crust 
+         input#size(type='text', name='crust', value= crust ) 
+     div.form-group 
+         label.pizzaAttr(for='count') Pizza count 
+         input#cost(type='number', name='count', value= count ) 
+     input(type="submit") 
  
-  script. 
-    document.forms['PizzaForm'].addEventListener('submit', (event) => { 
-      event.preventDefault(); 
-      // TODO do something here to show user that form is being submitted 
-      fetch(event.target.action, { 
-        method: 'PUT', 
-        body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
-      }).then((resp) => { 
-        return resp.json(); // or resp.text() or whatever the server sends 
-      }).then((body) => { 
-        alert("Update succeded") 
-        // TODO handle body 
-      }).catch((error) => { 
-        // TODO handle error 
-        alert("Update failed " + error ) 
-      }); 
-    }); 
+   script. 
+     document.forms['PizzaForm'].addEventListener('submit', (event) => { 
+       event.preventDefault(); 
+       // TODO do something here to show user that form is being submitted 
+       fetch(event.target.action, { 
+         method: 'PUT', 
+         body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
+       }).then((resp) => { 
+         return resp.json(); // or resp.text() or whatever the server sends 
+       }).then((body) => { 
+         alert("Update succeded") 
+         // TODO handle body 
+       }).catch((error) => { 
+         // TODO handle error 
+         alert("Update failed " + error ) 
+       }); 
+     }); 
