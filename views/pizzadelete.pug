@@ -1,0 +1,53 @@
+extends layout 
+ 
+block content 
+  h1= title 
+ 
+  if (toShow == null) 
+    h2 No instance to delete 
+  else 
+    - let pizzaid = toShow._id 
+    - let size = toShow.size
+    - let crust = toShow.crust
+    - let count = toShow.count
+    - let actionid = "/resource/pizzas/" + pizzaid 
+    script let actionid = "#{actionid}" 
+    div 
+      div.row 
+        div(class='pizzaAttr mr-3') Pizza ID is: 
+        div #{pizzaid} 
+      div.row 
+        div(class='pizzaAttr mr-3') Pizza Size is: 
+        div #{size} 
+      div.row 
+        div(class='pizzaAttr mr-3') Pizza Crust is: 
+        div #{crust} 
+      div.row 
+        div(class='pizzaAttr mr-3') Pizza Count is: 
+        div #{count}
+ 
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete 
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel 
+ 
+  script. 
+    function cancel() { 
+      // Go back to the home page for the pizza collection 
+      window.location.href='/pizza' 
+    } 
+  script. 
+    function deleteOnid() { 
+      console.log("starting delete") 
+      // delete first 
+      fetch(actionid, { 
+        method: 'DELETE'
+      }).then((resp) => { 
+        return resp.json(); // or resp.text() or whatever the server sends 
+      }).then((body) => { 
+        alert("Delete succeded") 
+        window.location.href='/pizza' 
+        // TODO handle body 
+      }).catch((error) => { 
+        // TODO handle error 
+        alert("Delete failed " + error ) 
+      }); 
+    } 

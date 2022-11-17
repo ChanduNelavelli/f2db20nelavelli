@@ -6,3 +6,18 @@ body {
 a {
   color: #00B7FF;
 }
+
+.pizzaAttr { 
+  background-color: aquamarine; 
+  width: 120px; 
+}
+
+.pizzaSty { 
+  background-color: aquamarine;
+  color: red; 
+  width: 120px;
+  font-size: large;
+  padding: 11px 20px;
+}
+
+
